@@ -1,0 +1,32 @@
+rules_version = '2';
+
+// 任何人都能用觀看連結讀取單一賽程；只有建立者能列出、修改、刪除自己的賽程。
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /tournaments/{tournamentId} {
+      allow get: if true;
+
+      allow list: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+
+      allow create: if request.auth != null
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() <= 40
+        && request.resource.data.players is list
+        && request.resource.data.players.size() >= 2
+        && request.resource.data.players.size() <= 64
+        && request.resource.data.slots is list
+        && request.resource.data.slots.size() <= 64;
+
+      allow update: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['winners', 'undo', 'updatedAt'])
+        && request.resource.data.undo.size() <= 50;
+
+      allow delete: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+    }
+  }
+}
