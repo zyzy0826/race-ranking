@@ -28,9 +28,9 @@
 ### 1. 建立 Firebase 專案
 
 1. 到 <https://console.firebase.google.com/> →「新增專案」，名稱隨意，Google Analytics 可以關掉。
-2. 左側「Build → Authentication」→「開始使用」→「Sign-in method」→ 啟用 **Google**。
-3. 左側「Build → Firestore Database」→「建立資料庫」→ 位置選 `asia-east1`（台灣）→ 選「以正式版模式啟動」。
-4. Firestore 的「規則」分頁 → 把本專案 [`firestore.rules`](firestore.rules) 的內容整個貼上 →「發布」。
+2. 左側「Security（安全性）→ Authentication」→「開始使用」→「Sign-in method」→ 啟用 **Google**。
+3. 左側「Databases & Storage（資料庫與儲存空間）→ Firestore」→「建立資料庫」→ 位置選 `asia-east1`（台灣）→ 選「以正式版模式啟動」。
+4. 同一個地方（Databases & Storage → Firestore）的「Rules（規則）」分頁 → 把本專案 [`firestore.rules`](firestore.rules) 的內容整個貼上 →「發布」。
 5. 專案設定（齒輪）→「一般」→ 下方「你的應用程式」→ 點 `</>`（網頁）註冊一個應用程式 → 複製 `firebaseConfig`，貼到 [`js/firebase-config.js`](js/firebase-config.js)。
 
 > `firebaseConfig` 本來就會公開在網頁裡，放上 GitHub 沒問題；真正保護資料的是第 4 步的規則。
@@ -43,7 +43,7 @@
 
 ### 3. 允許 GitHub Pages 網域登入
 
-Firebase 主控台 →「Authentication → Settings → 已授權網域」→ 新增 `<你的帳號>.github.io`。
+Firebase 主控台 →「Security（安全性）→ Authentication → Settings → 已授權網域」→ 新增 `<你的帳號>.github.io`。
 
 沒加這步的話，按登入會出現 `auth/unauthorized-domain` 錯誤。
 
